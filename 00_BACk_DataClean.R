@@ -4,6 +4,26 @@ library(here)
 Transitions_data <- read.csv(here("transitions_merged.csv"))
 BACk_data <- read.csv(here("BACkStudy_CBAim2Data.csv"))
 
+write.csv(BACk_data, here("my_data.csv"))
+
+
+# Split into baseline and follow-up
+baseline <- BACk_data |> 
+  filter(redcap_event_name == "baseline_arm_1")  |> 
+  select(-redcap_event_name, -redcap_repeat_instrument, -redcap_repeat_instance)
+
+followup <- BACk_data |>
+  filter(redcap_event_name == "3_month_followup_arm_1") |>
+  select(record_id, where(~!all(is.na(.)))) |>
+  select(-any_of(c("redcap_event_name", "redcap_repeat_instrument", "redcap_repeat_instance")))
+
+# Identify columns that appear in BOTH splits (besides record_id)
+# Followup rows duplicate some baseline cols with all NAs — those were dropped above.
+# Any remaining overlap gets a suffix to avoid collision.
+wide <- left_join(baseline, followup, by = "record_id", suffix = c("_bl", "_fu"))
+
+# Preview
+glimpse(wide)
 
 
 
