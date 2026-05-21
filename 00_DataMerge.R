@@ -1,7 +1,7 @@
 library(tidyverse)
 library(here)
 
-Transitions_data <- read.csv(here("transitions_merged.csv"))
+transitions <- read.csv(here("transitions_merged.csv"))
 BACk_data <- read.csv(here("BACkStudy_CBAim2Data.csv"))
 
 write.csv(BACk_data, here("my_data.csv"))
@@ -25,6 +25,34 @@ wide <- left_join(baseline, followup, by = "record_id", suffix = c("_bl", "_fu")
 # Preview
 glimpse(wide)
 
+
+# Remove the original row-index column exported by Python, and drop record_id
+# from both (they are study-specific IDs, not shared across datasets)
+wide <- wide |>
+  select(-any_of(c("X", "record_id"))) |>
+  mutate(dataset = "BACk_Aim2")
+
+transitions <- transitions |>
+  select(-record_id) |>
+  mutate(dataset = "Transitions")
+
+# Stack the two datasets (rbind-style).
+# Columns unique to one dataset will be NA for the other.
+merged <- bind_rows(wide, transitions)
+
+# Create a new sequential participant ID (1 to 386)
+merged <- merged |>
+  mutate(participant_id = row_number()) |>
+  relocate(participant_id, dataset)
+
+# Quick sanity check
+message("Rows:    ", nrow(merged))   # expect 386
+message("Columns: ", ncol(merged))   # expect 1782
+print(count(merged, dataset))        # BACk_Aim2 = 255, Transitions = 131
+
+# Save
+write.csv(merged, here("BACk_Transitions_merged.csv"), row.names = FALSE)
+message("Saved: BACk_Transitions_merged.csv")
 
 
 
