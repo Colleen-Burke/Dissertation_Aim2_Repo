@@ -42,18 +42,26 @@ Transitions1 <- Transitions1 |>
     zipcode, neighbor_ex03,
     substance_use1, substance_use2,
     smoking_status_100, smoking_status_daily,
-    smoker_status_cat, smoker_status_cat2
+    smoker_status_cat, smoker_status_cat2, m3_lbp_vas_current_3mo, 
+    m3_cdc_pain_freq_3mo, m3_cdc_pain_interfere_3mo, m3_nih_lbpfrequency_3mo, 
+    m3_peg_enjoyment_3mo, m3_peg_activity_3mo
   ) |>
   rename(
-    social_relationships = promis_global05_902706,
-    social_activities    = promis_global09r_fbd679,
-    qol                  = promis_global02_b59611,
-    general_health       = promis_global01_9f6d75,
-    mental_health        = promis_global10r,
-    physical_health      = promis_global03_a64ef7,
-    perform_pa           = promis_global06_711d3a,
-    fatigue              = promis_global08r,
-    neighborhood_walk    = neighbor_ex03
+    social_relationships   = promis_global05_902706,
+    social_activities      = promis_global09r_fbd679,
+    qol                    = promis_global02_b59611,
+    general_health         = promis_global01_9f6d75,
+    mental_health          = promis_global10r,
+    physical_health        = promis_global03_a64ef7,
+    perform_pa             = promis_global06_711d3a,
+    fatigue                = promis_global08r,
+    neighborhood_walk      = neighbor_ex03,
+    lbp_vas_current_3mo    = m3_lbp_vas_current_3mo, 
+    cdc_pain_freq_3mo      = m3_cdc_pain_freq_3mo, 
+    cdc_pain_interfere_3mo = m3_cdc_pain_interfere_3mo, 
+    nih_lbpfrequency_3mo   = m3_nih_lbpfrequency_3mo, 
+    peg_enjoyment_3mo      = m3_peg_enjoyment_3mo, 
+    peg_activity_3mo       = m3_peg_activity_3mo
   ) |> 
   mutate(
     # --- Social variables (with Excellent as reference) ---
