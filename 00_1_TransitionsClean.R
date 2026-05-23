@@ -38,20 +38,20 @@ Transitions1 <- Transitions1 |>
     startback_total_score, startback_subscore, startback_risk, startback_risk_label,
     promis_global05_902706, promis_global01_9f6d75,
     promis_global02_b59611, promis_global10r, promis_global03_a64ef7,
-    promis_global06_711d3a, promis_global08r,
+    promis_global06_711d3a, promis_global08r,promis_global04_fd7005,
     zipcode, neighbor_ex03,
     substance_use1, substance_use2,
     smoking_status_100, smoking_status_daily,
     smoker_status_cat, smoker_status_cat2, m3_lbp_vas_current_3mo, 
     m3_cdc_pain_freq_3mo, m3_cdc_pain_interfere_3mo, m3_nih_lbpfrequency_3mo, 
-    m3_peg_enjoyment_3mo, m3_peg_activity_3mo
+    m3_peg_enjoyment_3mo, m3_peg_activity_3mo, stress
   ) |>
   rename(
     social_relationships   = promis_global05_902706,
     social_activities      = promis_global09r_fbd679,
     qol                    = promis_global02_b59611,
     general_health         = promis_global01_9f6d75,
-    mental_health          = promis_global10r,
+    mental_health          = promis_global04_fd7005,
     physical_health        = promis_global03_a64ef7,
     perform_pa             = promis_global06_711d3a,
     fatigue                = promis_global08r,
@@ -357,5 +357,21 @@ Transitions1 <- Transitions1 |>
     )
   )
 
+
+# Convert ethnicity to character in both datasets before stacking
+Transitions1 <- Transitions1 %>%
+  mutate(ethnicity = as.character(ethnicity))
+
+
+# Convert home_ownership to character in both datasets before stacking
+Transitions1 <- Transitions1 %>%
+  mutate(home_ownership = as.character(home_ownership))
+
+
+# Add study identifier to each dataset
+Transitions1 <- Transitions1 %>%
+  mutate(study = "Transitions")
+
+str(Transitions1)
 
 write.csv(Transitions1, here("Transitions_Aim2.csv"))
