@@ -57,6 +57,16 @@ analytic_data <- analytic_data %>%
   filter(!is.na(cdc_pain_freq_3mo))
 
 
+analytic_data <- analytic_data |> 
+  mutate(chronic_pain = ifelse(
+    cdc_pain_freq_3mo %in% c(2, 3), 1, 0
+  ), 
+  chronic_pain_f = factor(chronic_pain,
+                          levels = c(0,1),
+                          labels = c("No Chronic LBP", "Chronic LBP"))
+  )
+
+
 
 # Create High Impact Chronic Pain Variabl
 analytic_data <- analytic_data %>%
