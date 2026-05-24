@@ -58,5 +58,19 @@ analytic_data <- analytic_data %>%
 
 
 
+# Create High Impact Chronic Pain Variabl
+analytic_data <- analytic_data %>%
+  mutate(hicp = case_when(
+    cdc_pain_freq_3mo %in% c(0, 1)                                                                 ~ 0,  # No chronic pain
+    cdc_pain_freq_3mo %in% c(2, 3) & cdc_pain_interfere_3mo %in% c(2, 3)                          ~ 3,  # High-impact
+    cdc_pain_freq_3mo %in% c(2, 3) & cdc_pain_interfere_3mo %in% c(0, 1) & peg_activity_3mo >= 4  ~ 2,  # Bothersome
+    cdc_pain_freq_3mo %in% c(2, 3) & cdc_pain_interfere_3mo %in% c(0, 1) & peg_activity_3mo < 4   ~ 1,  # Mild
+    TRUE ~ NA_real_
+  ),
+  hicp_f = factor(hicp,
+                  levels = c(0, 1, 2, 3),
+                  labels = c("No Chronic Pain", "Mild Chronic Pain", "Bothersome Chronic Pain", "High-Impact Chronic Pain")
+  ))
+
 
 write.csv(analytic_data, here("Aim2_data.csv"))
