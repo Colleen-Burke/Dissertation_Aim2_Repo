@@ -52,11 +52,6 @@ analytic_data <- combined_data |>
 
 
 
-# Drop anyone with missing outcome / 3 mo data
-analytic_data <- analytic_data %>%
-  filter(!is.na(cdc_pain_freq_3mo))
-
-
 analytic_data <- analytic_data |> 
   mutate(chronic_pain = ifelse(
     cdc_pain_freq_3mo %in% c(2, 3), 1, 0
@@ -81,6 +76,18 @@ analytic_data <- analytic_data %>%
                   levels = c(0, 1, 2, 3),
                   labels = c("No Chronic Pain", "Mild Chronic Pain", "Bothersome Chronic Pain", "High-Impact Chronic Pain")
   ))
+
+
+
+# Drop anyone with missing outcome / exposure
+analytic_data <- analytic_data %>%
+  filter(complete.cases(cdc_pain_freq_3mo, social_health_num, social_health_d,
+                        social_health2_d, social_relationships_num, 
+                        social_relationships_d, social_relationships2_d, 
+                        social_activities_num, social_activities_d,
+                        social_activities2_d, isolation_score, 
+                        isolation_cat_d, isolation_cat2_d, chronic_pain))
+dim(analytic_data)
 
 
 write.csv(analytic_data, here("Aim2_data.csv"))
