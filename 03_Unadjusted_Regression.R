@@ -19,7 +19,7 @@ social_health2_d_model <- glm(
 summary(social_health2_d_model)
 
 
-##--- Social Health Number Model ---
+##--- Social Health Model ---
 social_health_num_model <- glm(
   chronic_pain ~ social_health_num, 
   data = analytic_data, 
@@ -28,7 +28,10 @@ social_health_num_model <- glm(
 summary(social_health_num_model)
 
 
-##--- Social Activities Number Model ---
+
+
+
+##--- Social Activities Model ---
 social_activities_num_model <- glm(
   chronic_pain ~ social_activities_num, 
   data = analytic_data, 
@@ -38,7 +41,7 @@ summary(social_activities_num_model)
 
 
 
-##--- Social Relationships Number Model ---
+##--- Social Relationships Model ---
 social_relationships_num_model <- glm(
   chronic_pain ~ social_relationships_num, 
   data = analytic_data, 
@@ -48,13 +51,13 @@ summary(social_relationships_num_model)
 
 
 
-##--- Social Relationships Number Model ---
-isolation_cat_nominal_model <- glm(
-  chronic_pain ~ isolation_cat_nominal, 
+##--- Social Isolation Model ---
+isolation_score_model <- glm(
+  chronic_pain ~ isolation_score, 
   data = analytic_data, 
   family = binomial)
 
-summary(isolation_cat_nominal_model)
+summary(isolation_score_model)
 
 
 
@@ -90,7 +93,7 @@ summary(isolation_cat_d_model)
 
 
 
-##--- Social Activities Dichotomized Model ---
+##--- Social Activities Dichotomized 2 Model ---
 social_activities2_d_model <- glm(
   chronic_pain ~ social_activities2_d, 
   data = analytic_data, 
