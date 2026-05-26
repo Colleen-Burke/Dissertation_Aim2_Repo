@@ -86,7 +86,8 @@ analytic_data <- analytic_data %>%
                         social_relationships_d, social_relationships2_d, 
                         social_activities_num, social_activities_d,
                         social_activities2_d, isolation_score, 
-                        isolation_cat_d, isolation_cat2_d, chronic_pain))
+                        isolation_cat_d, isolation_cat2_d, social_function_num,
+                        chronic_pain))
 dim(analytic_data)
 
 

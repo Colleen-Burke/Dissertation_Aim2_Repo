@@ -19,6 +19,13 @@ social_health_num_model_adj <- glm(
   family = binomial)
 summary(social_health_num_model_adj)
 
+##--- Social Function Model (Adjusted) ---
+social_function_num_model_adj <- glm(
+  chronic_pain ~ social_function_num + age + sex + race_f + ethnicity_f + bmi_measured + general_health + mental_health,
+  data = analytic_data,
+  family = binomial)
+summary(social_function_num_model_adj)
+
 ##--- Social Activities Model (Adjusted) ---
 social_activities_num_model_adj <- glm(
   chronic_pain ~ social_activities_num + age + sex + race_f + ethnicity_f + bmi_measured + general_health + mental_health,

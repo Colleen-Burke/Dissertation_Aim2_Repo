@@ -29,6 +29,15 @@ summary(social_health_num_model)
 
 
 
+##--- Social Function Model ---
+social_function_model <- glm(
+  chronic_pain ~ social_function_num,
+  data = analytic_data,
+  family = binomial
+)
+
+summary(social_function_model)
+
 
 
 ##--- Social Activities Model ---

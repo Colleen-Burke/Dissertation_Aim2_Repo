@@ -293,6 +293,7 @@ BACk_data_wide_clean <- BACk_data_wide_clean %>%
       levels = c("High", "Low")
     ),
     
+    
     # Isolation (with Not Isolated as reference)
     isolation_cat_ordinal = factor(
       isolation_cat,
@@ -416,7 +417,10 @@ BACk_data_wide_clean <- BACk_data_wide_clean |>
       social_activities_nominal == "Fair"      ~ 2,
       social_activities_nominal == "Poor"      ~ 1,
       TRUE ~ NA_real_
-    )
+    ),
+    
+    social_function_num = social_relationships_num + social_activities_num
+    
   )
 
 # Create Social Relationship/Activity Composite Item

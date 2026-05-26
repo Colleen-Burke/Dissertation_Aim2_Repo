@@ -354,7 +354,8 @@ Transitions1 <- Transitions1 |>
       social_health_num %in% c(2, 3, 4, 5, 6, 7, 8, 9, 10) ~ "Poor",   
       social_health_num %in% c(11, 12, 13, 14) ~ "Good",
       TRUE ~ NA_character_
-    )
+    ),
+      social_function_num = social_relationships_num + social_activities_num
   )
 
 
