@@ -5,6 +5,19 @@ library(knitr)
 
 table1_data <- read.csv(here("Aim2_data.csv"))
 
+table1_data <- table1_data  |> 
+  mutate(
+    race_f = factor(race_f,
+                    levels = c("American Indian or Alaskan Native", "Asian",
+                               "Native Hawaiian or Other Pacific Islander",
+                               "Black or African American", "White",
+                               "Middle Eastern or North African", "Other",
+                               "Unknown", "Multiracial", "Choose Not to Respond")),
+    ethnicity_f = factor(ethnicity_f,
+                         levels = c("Non-Hispanic", "Hispanic or Latinx"))
+  )
+
+
 table_one <- table1_data |> 
   summarise(
     N = n(),
@@ -24,44 +37,44 @@ table_one <- table1_data |>
     ),
     
     'Hispanic, n (%)' = paste0(
-      sum(ethnicity_f == "Hispanic", na.rm = TRUE),
+      sum(ethnicity_f == "Hispanic or Latinx", na.rm = TRUE),
       " (",
-      round(mean(ethnicity_f == "Hispanic", na.rm = TRUE) * 100, 1),
+      round(mean(ethnicity_f == "Hispanic or Latinx", na.rm = TRUE) * 100, 1),
       ")"
     ),
     
     'White Race, n (%)' = paste0(
-      sum(race_f == "White"),
+      sum(race_f == "White", na.rm = TRUE),
       " (",
-      round(mean(race_f == "White") * 100, 1),
+      round(mean(race_f == "White", na.rm = TRUE) * 100, 1),
       ")"
     ),
     
     'Black Race, n (%)' = paste0(
-      sum(race_f == "Black"),
+      sum(race_f == "Black or African American", na.rm = TRUE),
       " (",
-      round(mean(race_f == "Black") * 100, 1),
+      round(mean(race_f == "Black or African American", na.rm = TRUE) * 100, 1),
       ")"
     ),
     
     'Asian Race, n (%)' = paste0(
-      sum(race_f == "Asian"),
+      sum(race_f == "Asian", na.rm = TRUE),
       " (",
-      round(mean(race_f == "Asian") * 100, 1),
+      round(mean(race_f == "Asian", na.rm = TRUE) * 100, 1),
       ")"
     ),
     
     'Other Race, n (%)' = paste0(
-      sum(race_f == "Other"),
+      sum(race_f == "Other", na.rm = TRUE),
       " (",
-      round(mean(race_f == "Other") * 100, 1),
+      round(mean(race_f == "Other", na.rm = TRUE) * 100, 1),
       ")"
     ),
     
     'Unknown Race, n (%)' = paste0(
-      sum(race_f == "Unknown"),
+      sum(race_f == "Unknown", na.rm = TRUE),
       " (",
-      round(mean(race_f == "Unknown") * 100, 1),
+      round(mean(race_f == "Unknown", na.rm = TRUE) * 100, 1),
       ")"
     ),
     
