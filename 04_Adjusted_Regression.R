@@ -1,3 +1,19 @@
+library(tidyverse)
+library(here)
+
+
+analytic_data <- analytic_data  |> 
+  mutate(
+    race_f = factor(race_f,
+                    levels = c("American Indian or Alaskan Native", "Asian",
+                               "Native Hawaiian or Other Pacific Islander",
+                               "Black or African American", "White",
+                               "Middle Eastern or North African", "Other",
+                               "Unknown", "Multiracial", "Choose Not to Respond")),
+    ethnicity_f = factor(ethnicity_f,
+                         levels = c("Non-Hispanic", "Hispanic or Latinx"))
+  )
+
 ##--- Social Health Dichotomized Model (Adjusted) ---
 social_health_d_model_adj <- glm(
   chronic_pain ~ social_health_d + 
