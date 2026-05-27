@@ -95,5 +95,8 @@ analytic_data <- analytic_data %>%
                         chronic_pain))
 dim(analytic_data)
 
+table(analytic_data$race_f)
+table(analytic_data$ethnicity_f)
+
 
 write.csv(analytic_data, here("Aim2_data.csv"))
