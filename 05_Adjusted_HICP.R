@@ -1,0 +1,70 @@
+library(tidyverse)
+library(here)
+
+analytic_data <- analytic_data |> 
+  mutate(
+    race_f = factor(race_f,
+                    levels = c("American Indian or Alaskan Native", "Asian",
+                               "Native Hawaiian or Other Pacific Islander",
+                               "Black or African American", "White",
+                               "Middle Eastern or North African", "Other",
+                               "Unknown", "Multiracial", "Choose Not to Respond")),
+    ethnicity_f = factor(ethnicity_f,
+                         levels = c("Non-Hispanic", "Hispanic or Latinx"))
+  ,
+
+    race_collapsed = case_when(
+      race_f == "White" ~ "White",
+      race_f == "Black or African American" ~ "Black or African American",
+      race_f == "Asian" ~ "Asian",
+      race_f %in% c("American Indian or Alaskan Native",
+                    "Native Hawaiian or Other Pacific Islander",
+                    "Middle Eastern or North African",
+                    "Multiracial", "Other") ~ "Other/Multiracial",
+      race_f %in% c("Unknown", "Choose Not to Respond") ~ NA_character_,
+      TRUE ~ "Other/Multiracial"
+    ),
+    race_collapsed = factor(race_collapsed,
+                            levels = c("White", "Black or African American",
+                                       "Asian", "Other/Multiracial"))
+  )
+
+##--- Social Health Model (Adjusted) ---
+social_health_hicp_model_adj <- glm(
+  hicp_binary ~ social_health_num + 
+    age + sex + race_collapsed + ethnicity_f + bmi_measured + general_health + 
+    mental_health + psqi_global_score + lbp_vas_current,
+  data = analytic_data,
+  family = binomial)
+summary(social_health_hicp_model_adj)
+exp(cbind(OR = coef(social_health_hicp_model_adj), confint(social_health_hicp_model_adj)))
+
+##--- Social Activities Model (Adjusted) ---
+social_activities_hicp_model_adj <- glm(
+  hicp_binary ~ social_activities_num + 
+    age + sex + race_collapsed + ethnicity_f + bmi_measured + general_health + 
+    mental_health + psqi_global_score + lbp_vas_current,
+  data = analytic_data,
+  family = binomial)
+summary(social_activities_hicp_model_adj)
+exp(cbind(OR = coef(social_activities_hicp_model_adj), confint(social_activities_hicp_model_adj)))
+
+##--- Social Relationships Model (Adjusted) ---
+social_relationships_hicp_model_adj <- glm(
+  hicp_binary ~ social_relationships_num + 
+    age + sex + race_collapsed + ethnicity_f + bmi_measured + general_health + 
+    mental_health + psqi_global_score + lbp_vas_current,
+  data = analytic_data,
+  family = binomial)
+summary(social_relationships_hicp_model_adj)
+exp(cbind(OR = coef(social_relationships_hicp_model_adj), confint(social_relationships_hicp_model_adj)))
+
+##--- Social Isolation Model (Adjusted) ---
+isolation_hicp_adj <- glm(
+  hicp_binary ~ isolation_score + 
+    age + sex + race_collapsed + ethnicity_f + bmi_measured + general_health + 
+    mental_health + psqi_global_score + lbp_vas_current,
+  data = analytic_data,
+  family = binomial)
+summary(isolation_hicp_adj)
+exp(cbind(OR = coef(isolation_hicp_adj), confint(isolation_hicp_adj)))
