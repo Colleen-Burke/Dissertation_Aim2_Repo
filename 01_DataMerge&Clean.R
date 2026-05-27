@@ -74,8 +74,13 @@ analytic_data <- analytic_data %>%
   ),
   hicp_f = factor(hicp,
                   levels = c(0, 1, 2, 3),
-                  labels = c("No Chronic Pain", "Mild Chronic Pain", "Bothersome Chronic Pain", "High-Impact Chronic Pain")
-  ))
+                  labels = c("No Chronic Pain", 
+                             "Mild Chronic Pain", 
+                             "Bothersome Chronic Pain", 
+                             "High-Impact Chronic Pain")
+  ),
+  hicp_binary = ifelse(hicp == 3, 1, 0)
+  )
 
 
 
