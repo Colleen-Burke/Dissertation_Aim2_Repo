@@ -79,10 +79,10 @@ BACk_data_wide_clean <- BACk_data_wide_clean %>%
     # Sum of race checkboxes (excluding race___6 which is ethnicity)
     race_count = race___4 + race___3 + race___1 + race___0 + 
       race___7 + race___2 + race___555 + race___777 + race___999,
-    
+
     # Create race_f numeric value
     race_f_num = case_when(
-      race_count > 1                ~ 888,  # Multiracial (more than one selected)
+      race_count > 1                ~ 888,  # Multiracial
       race___4   == 1               ~ 4,    # White
       race___3   == 1               ~ 3,    # Black or African American
       race___1   == 1               ~ 1,    # Asian
@@ -92,6 +92,7 @@ BACk_data_wide_clean <- BACk_data_wide_clean %>%
       race___555 == 1               ~ 555,  # Other
       race___777 == 1               ~ 777,  # Unknown
       race___999 == 1               ~ 999,  # Choose Not to Respond
+      race___6   == 1               ~ 555,  # Hispanic/Latinx only, no race → Other
       TRUE                          ~ NA_real_
     ),
     
@@ -110,10 +111,19 @@ BACk_data_wide_clean <- BACk_data_wide_clean %>%
                                "Choose Not to Respond")),
     
     # Create ethnicity factor variable
-    ethnicity_f = factor(race___6,
-                       levels = c(0, 1),
-                       labels = c("Non-Hispanic", "Hispanic or Latinx"))
+    ethnicity_f = factor(
+      case_when(
+        race___6   == 1 ~ 1,    # Hispanic or Latinx
+        race___777 == 1 ~ 2,    # Unknown (also unknown on race)
+        race___999 == 1 ~ 999,  # Choose Not to Respond
+        race___6   == 0 ~ 0,    # Not Hispanic or Latinx
+        TRUE            ~ NA_real_
+      ),
+      levels = c(0, 1, 2, 999),
+      labels = c("Not Hispanic or Latinx", "Hispanic or Latinx", "Unknown", "Choose Not to Respond")
+    )
   ) %>%
+  
   # Drop the helper columns
   select(-race_count, -race_f_num)
 
