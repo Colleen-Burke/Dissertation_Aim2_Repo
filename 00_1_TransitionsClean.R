@@ -165,7 +165,7 @@ Transitions1 <- Transitions1 |>
     race_f = factor(
       race,
       levels = c(0, 1, 2, 3, 5),
-      labels = c("White", "Black", "Unknown", "Asian", "Other")
+      labels = c("White", "Black or African American", "Unknown", "Asian", "Other")
     ),
     race_dichotomized = if_else(race_f == "White", 0, 1),
     ethnicity_f = factor(
