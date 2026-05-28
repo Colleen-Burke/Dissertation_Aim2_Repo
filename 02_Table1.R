@@ -5,17 +5,17 @@ library(knitr)
 
 table1_data <- read.csv(here("Aim2_data.csv"))
 
-table1_data <- table1_data  |> 
-  mutate(
-    race_f = factor(race_f,
-                    levels = c("American Indian or Alaskan Native", "Asian",
-                               "Native Hawaiian or Other Pacific Islander",
-                               "Black or African American", "White",
-                               "Middle Eastern or North African", "Other",
-                               "Unknown", "Multiracial", "Choose Not to Respond")),
-    ethnicity_f = factor(ethnicity_f,
-                         levels = c("Non-Hispanic", "Hispanic or Latinx"))
-  )
+# table1_data <- table1_data  |> 
+#   mutate(
+#     race_f = factor(race_f,
+#                     levels = c("American Indian or Alaskan Native", "Asian",
+#                                "Native Hawaiian or Other Pacific Islander",
+#                                "Black or African American", "White",
+#                                "Middle Eastern or North African", "Other",
+#                                "Unknown", "Multiracial", "Choose Not to Respond")),
+#     ethnicity_f = factor(ethnicity_f,
+#                          levels = c("Non-Hispanic", "Hispanic or Latinx"))
+#   )
 
 
 table_one <- table1_data |> 
